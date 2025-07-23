@@ -31,7 +31,7 @@ Spendy adalah aplikasi manajemen transaksi keuangan sederhana menggunakan **Fast
 
 1. **Clone Repository**
 ```bash
-git clone https://github.com/username/spendy.git
+git clone https://github.com/RanggaCasper/spendy.git
 cd spendy
 ````
 
