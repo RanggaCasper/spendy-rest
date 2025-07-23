@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+ENV/
+venv/
+pip-wheel-metadata/
+.vscode/
+.env
+.ipynb_checkpoints/
+openapi.json
