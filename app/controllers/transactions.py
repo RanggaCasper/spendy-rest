@@ -71,7 +71,7 @@ async def get_transactions_by_type(transaction_type: str):
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code=500, detail="Failed to fetch transactions by type")
-
+# top tres delete function
 async def delete_transaction(transaction_id: str):
     try:
         result = await db.transactions.delete_one({"_id": ObjectId(transaction_id)})
