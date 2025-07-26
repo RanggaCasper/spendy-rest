@@ -3,7 +3,7 @@ from bson import ObjectId
 from app.models import transactions as Transaction
 from app.database import db
 import traceback
-
+#hello saya add comment ini untuk menambahkan komentar di file transactions.py! sangat membantu karena saya tidak tahu apa yang harus saya tambahkan di file ini.
 async def create_transaction(transaction: Transaction):
     try:
         result = await db.transactions.insert_one(transaction.dict())
@@ -23,16 +23,21 @@ async def get_transactions():
         traceback.print_exc()
         raise HTTPException(status_code=500, detail="Failed to fetch transactions")
 
-async def get_transaction(transaction_id: str):
+async def get_top_5_transactions():
     try:
-        transaction = await db.transactions.find_one({"_id": ObjectId(transaction_id)})
-        if transaction:
-            transaction["_id"] = str(transaction["_id"])
-            return transaction
-        raise HTTPException(status_code=404, detail="Transaction not found")
+        pipeline = [
+            { "$match": { "amount": { "$type": "number" } } },
+            { "$sort": { "amount": -1 } },
+            { "$limit": 5 }
+        ]
+        results = []
+        async for item in db.transactions.aggregate(pipeline):
+            item["_id"] = str(item["_id"])
+            results.append(item)
+        return results
     except Exception as e:
         traceback.print_exc()
-        raise HTTPException(status_code=500, detail="Failed to fetch transaction")
+        raise HTTPException(status_code=500, detail=str(e))
 
 async def get_transactions_by_type(transaction_type: str):
     try:
@@ -56,3 +61,5 @@ async def delete_transaction(transaction_id: str):
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code=500, detail="Failed to delete transaction")
+    
+    

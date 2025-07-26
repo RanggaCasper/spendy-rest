@@ -15,9 +15,9 @@ async def create(transaction: TransactionModel):
 async def get_all():
     return await TransactionController.get_transactions()
 
-@router.get("/{transaction_id}")
-async def get_by_id(transaction_id: str):
-    return await TransactionController.get_transaction(transaction_id)
+@router.get("/top5")
+async def get_top_5():
+    return await TransactionController.get_top_5_transactions()
 
 @router.get("/type/{transaction_type}")
 async def get_by_type(transaction_type: str):
