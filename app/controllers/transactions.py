@@ -4,6 +4,26 @@ from app.models import transactions as Transaction
 from app.database import db
 import traceback
 #hello saya add comment ini untuk menambahkan komentar di file transactions.py! sangat membantu karena saya tidak tahu apa yang harus saya tambahkan di file ini.
+async def get_total_amount():
+    """
+    Menghitung total amount dari semua transaksi.
+    """
+    try:
+        pipeline = [
+            { "$group": { "_id": None, "total": { "$sum": "$amount" } } }
+        ]
+        result = await db.transactions.aggregate(pipeline).to_list(length=1)
+        total = result[0]["total"] if result else 0
+        return {"total_amount": total}
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail="Failed to calculate total amount") 
+    # totally not useless code, btw.
+
+
+
+
+
 async def create_transaction(transaction: Transaction):
     try:
         result = await db.transactions.insert_one(transaction.dict())
