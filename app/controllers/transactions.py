@@ -3,7 +3,7 @@ from bson import ObjectId
 from app.models import transactions as Transaction
 from app.database import db
 import traceback
-#hello saya add comment ini untuk menambahkan komentar di file transactions.py! sangat membantu karena saya tidak tahu apa yang harus saya tambahkan di file ini.
+
 async def get_total_amount():
     """
     Menghitung total amount dari semua transaksi.
@@ -42,7 +42,7 @@ async def get_transactions():
     except Exception as e:
         traceback.print_exc()
         raise HTTPException(status_code=500, detail="Failed to fetch transactions")
-
+#top sinko agregate function
 async def get_top_5_transactions():
     try:
         pipeline = [
